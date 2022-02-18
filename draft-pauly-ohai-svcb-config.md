@@ -9,32 +9,27 @@
 # Only "title" needs to be changed; delete "abbrev" if your title is short.
 # Any other content can be edited, but be careful not to introduce errors.
 # Some fields will be set automatically during setup if they are unchanged.
-#
-# Don't include "-00" or "-latest" in the filename.
-# Labels in the form draft-<yourname>-<workgroup>-<name>-latest are used by
-# the tools to refer to the current version; see "docname" for example.
+
 #
 # This template uses kramdown-rfc2629: https://github.com/cabo/kramdown-rfc2629
 # You can replace the entire file if you prefer a different format.
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "Distribution of Oblivious Configurations via Service Binding Records"
+abbrev: "Oblivious Configs in SVCB"
 category: info
 
-docname: draft-todo-yourname-protocol-latest
+docname: draft-pauly-ohai-svcb-config-latest
 ipr: trust200902
-area: AREA
-workgroup: WG Working Group
+area: SEC
+workgroup: OHAI
 keyword: Internet-Draft
 venue:
-  group: WG
+  group: OHAI
   type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  mail: ohai@ietf.com
+  arch: https://datatracker.ietf.org/wg/ohai
 
 stand_alone: yes
 smart_quotes: no
@@ -42,9 +37,9 @@ pi: [toc, sortrefs, symrefs]
 
 author:
  -
-    name: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+    name: Tommy Pauly
+    organization: Apple Inc.
+    email: tpauly@apple.com
 
 normative:
 
