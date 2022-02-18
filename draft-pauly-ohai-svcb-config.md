@@ -5,14 +5,14 @@ category: info
 
 docname: draft-pauly-ohai-svcb-config-latest
 ipr: trust200902
-area: SEC
-workgroup: OHAI
+area: "Security"
+workgroup: "Oblivious HTTP Application Intermediation"
 keyword: Internet-Draft
 venue:
-  group: OHAI
-  type: Working Group
-  mail: ohai@ietf.com
-  arch: https://datatracker.ietf.org/wg/ohai
+  group: "Oblivious HTTP Application Intermediation"
+  type: "Working Group"
+  mail: "ohai@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/ohai/"
 
 stand_alone: yes
 smart_quotes: no
