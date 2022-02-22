@@ -51,8 +51,9 @@ between clients, proxies, and targets, the key configuration can often be
 shared in a bespoke fashion. However, some deployments involve clients
 discovering oblivious targets more dynamically. For example, a network may
 want to advertise a DNS resolver that is accessible over Oblivious HTTP
-and applies local network resolution policies. Clients can work with
-trusted proxies to access these target servers.
+and applies local network resolution policies via mechanisms like Discovery
+of Designated Resolvers ({{!DDR=I-D.draft-ietf-add-ddr-latest}}. Clients
+can work with trusted proxies to access these target servers.
 
 This document defines a mechanism to distribute Oblivious HTTP key
 configurations in DNS records, as a parameter that can be included in SVCB and
@@ -119,6 +120,24 @@ this service as a generic DoH service.
 Clients MUST validate that they can parse the value of "oblivious-keys"
 as a valid key configuration before attempting to use the service.
 
+## Interactions with DDR {#ddr}
+
+Clients can discover an oblivious DNS server configuration using
+DDR, by either querying _dns.resolver.arpa to a locally configured
+resolver or querying using the name of a resolver {{DDR}}.
+
+In the case of oblivious DNS servers, the client cannot direclty use
+the verification mechanisms described in {{DDR}}, which rely on
+checking for known resovler IP addresses or hostnames in TLS
+certificates, since clients do not directly perfom TLS with oblivious
+targets. Instead, a client MUST use some alternate mechanism to verify
+that it should use an oblivious target. For example, the client could have
+a local policy of known oblivious target names that it is allowed to
+use, or the client could coordinate with the oblivious proxy either
+have the oblivious proxy check the properties of the target's TLS
+certificate or filter to only allow targets known and trusted by the
+proxy.
+
 ### Handling Oblivious DoH Configurations
 
 Oblivious DoH was originally defined in
@@ -142,6 +161,11 @@ be represented by separate SVCB or HTTPS records, both with and
 without the "oblivious-keys" SvcParamKey.
 
 # Security and Privacy Considerations
+
+When discovering designated oblivious DNS servers using this mechanism,
+clients need to ensure that the designation is trusted in lieu of
+being able to directly check the contents of the target server's TLS
+certificate. See {{ddr}} for more discussion.
 
 As discussed in {{OHTTP}}, client requests using Oblivious HTTP
 can only be linked by recognizing the key configuration. In order to
