@@ -1266,11 +1266,15 @@ as a valid key configuration before attempting to use the service.<a href="#sect
 <p id="section-3.2.1-1">Clients can discover an oblivious DNS server configuration using
 DDR, by either querying _dns.resolver.arpa to a locally configured
 resolver or querying using the name of a resolver <span>[<a href="#DDR" class="xref">DDR</a>]</span>.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.1-2">In the case of oblivious DNS servers, the client cannot directly use
-the verification mechanisms described in <span>[<a href="#DDR" class="xref">DDR</a>]</span>, which rely on
-checking for known resolver IP addresses or hostnames in TLS
-certificates, since clients do not directly perform TLS with oblivious
-targets. Instead, a client <span class="bcp14">MUST</span> use some alternate mechanism to verify
+<p id="section-3.2.1-2">In the case of oblivious DNS servers, the client might not be able to
+directly use the verification mechanisms described in <span>[<a href="#DDR" class="xref">DDR</a>]</span>, which
+rely on checking for known resolver IP addresses or hostnames in TLS
+certificates, since clients do not generally perform TLS with oblivious
+targets. A client <span class="bcp14">MAY</span> perform a direct connection to the oblivious
+target server to do this TLS check, however this may be impossible
+or undesirable if the client does not want to ever expose its IP
+address to the oblivious target. If the client does not use the standard
+DDR verification check, it <span class="bcp14">MUST</span> use some alternate mechanism to verify
 that it should use an oblivious target. For example, the client could have
 a local policy of known oblivious target names that it is allowed to
 use, or the client could coordinate with the oblivious proxy to either
