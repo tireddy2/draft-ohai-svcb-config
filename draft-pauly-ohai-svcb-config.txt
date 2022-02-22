@@ -65,7 +65,7 @@ Table of Contents
 
    1.  Introduction
    2.  Conventions and Definitions
-   3.  The oblivious-keys SvcParamKey
+   3.  The oblivious-configs SvcParamKey
      3.1.  Use in HTTPS service records
      3.2.  Use in DNS server SVCB records
        3.2.1.  Interactions with DDR
@@ -100,7 +100,8 @@ Table of Contents
    This document defines a mechanism to distribute Oblivious HTTP key
    configurations in DNS records, as a parameter that can be included in
    SVCB and HTTPS DNS resource records [SVCB].  The presence of this
-   parameter indicates that a service is an oblivious target.
+   parameter indicates that a service is an oblivious target; see
+   Section 3 of [OHTTP] for a description of oblivious targets.
 
    This mechanism does not aid in the discovery of proxies to use to
    access oblivious targets; the configurations of proxies is out of
@@ -114,10 +115,10 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  The oblivious-keys SvcParamKey
+3.  The oblivious-configs SvcParamKey
 
-   The "oblivious-keys" SvcParamKey Section 6 is used to convey one or
-   more key configurations that can be used by clients to issue
+   The "oblivious-configs" SvcParamKey Section 6 is used to convey one
+   or more key configurations that can be used by clients to issue
    oblivious requests to a target server described by the SVCB record.
 
    In wire format, the value of the parameter is one or more KeyConfig
@@ -125,45 +126,45 @@ Table of Contents
    the value is the same concatenated KeyConfig structures encoded in
    Base64 [BASE64].
 
-   The meaning of the "oblivious-keys" parameter depends on the scheme
-   of the SVCB record.  This document defines the interpretation for the
-   "https" [SVCB] and "dns" [DNS-SVCB] schemes.  Other schemes that want
-   to use this parameter MUST define the interpretation and meaning of
-   the key.
+   The meaning of the "oblivious-configs" parameter depends on the
+   scheme of the SVCB record.  This document defines the interpretation
+   for the "https" [SVCB] and "dns" [DNS-SVCB] schemes.  Other schemes
+   that want to use this parameter MUST define the interpretation and
+   meaning of the configuration.
 
 3.1.  Use in HTTPS service records
 
    For the "https" scheme, which uses the HTTPS RR type instead of SVCB,
-   the presence of the "oblivious-keys" parameter means that the service
-   being described is an Oblivious HTTP service that uses the default
-   "message/bhttp request" media type [OHTTP] [BINARY-HTTP].
+   the presence of the "oblivious-configs" parameter means that the
+   service being described is an Oblivious HTTP service that uses the
+   default "message/bhttp" media type [OHTTP] [BINARY-HTTP].
 
-   When present in an HTTPS record, the "oblivious-keys" MUST be
+   When present in an HTTPS record, the "oblivious-configs" MUST be
    included in the mandatory parameter list, to ensure that
    implementations that do not understand the key do not interpret this
    service as a generic HTTP service.
 
    Clients MUST validate that they can parse the value of "oblivious-
-   keys" as a valid key configuration before attempting to use the
+   configs" as a valid key configuration before attempting to use the
    service.
 
 3.2.  Use in DNS server SVCB records
 
    For the "dns" scheme, as defined in [DNS-SVCB], the presence of the
-   "oblivious-keys" parameter means that the DNS server being described
-   is an Oblivious DNS over HTTP (DoH) service.  The default media type
-   expected for use in Oblivious HTTP to DNS resolvers is "application/
-   dns-message" [DOH].
+   "oblivious-configs" parameter means that the DNS server being
+   described is an Oblivious DNS over HTTP (DoH) service.  The default
+   media type expected for use in Oblivious HTTP to DNS resolvers is
+   "application/dns-message" [DOH].
 
-   The "oblivious-keys" parameter is only defined for use with DoH, so
-   the "alpn" SvcParamKey MUST indicate support for a version of HTTP
-   and the "dohpath" SvcParamKey MUST be present.  The "oblivious-keys"
-   MUST also be included in the mandatory parameter list, to ensure that
-   implementations that do not understand the key do not interpret this
-   service as a generic DoH service.
+   The "oblivious-configs" parameter is only defined for use with DoH,
+   so the "alpn" SvcParamKey MUST indicate support for a version of HTTP
+   and the "dohpath" SvcParamKey MUST be present.  The "oblivious-
+   configs" MUST also be included in the mandatory parameter list, to
+   ensure that implementations that do not understand the key do not
+   interpret this service as a generic DoH service.
 
    Clients MUST validate that they can parse the value of "oblivious-
-   keys" as a valid key configuration before attempting to use the
+   configs" as a valid key configuration before attempting to use the
    service.
 
 3.2.1.  Interactions with DDR
@@ -195,15 +196,15 @@ Table of Contents
 
 4.  Deployment Considerations
 
-   Deployments that add the "oblivious-keys" SvcParamKey need to be
+   Deployments that add the "oblivious-configs" SvcParamKey need to be
    careful to add this only to services meant to be accessed using
    Oblivious HTTP.  Information in a single SVCB record that contains
-   "oblivious-keys" only applies to the oblivious service, not other
+   "oblivious-configs" only applies to the oblivious service, not other
    HTTP services.
 
    If a service offers both traditional HTTP and oblivious HTTP, these
    can be represented by separate SVCB or HTTPS records, both with and
-   without the "oblivious-keys" SvcParamKey.
+   without the "oblivious-configs" SvcParamKey.
 
 5.  Security and Privacy Considerations
 
@@ -224,7 +225,7 @@ Table of Contents
    this attack.  Possible mitigations include:
 
    *  Validating that SVCB or HTTPS records including the "oblivious-
-      keys" are protected by DNSSEC [DNSSEC].  This prevents attacks
+      configs" are protected by DNSSEC [DNSSEC].  This prevents attacks
       where a unique response is generated for each client of a
       resolver.
 
@@ -248,11 +249,12 @@ Table of Contents
    IANA is requested to add the following entry to the SVCB Service
    Parameters registry ([SVCB]).
 
-    +========+================+=====================+=================+
-    | Number | Name           | Meaning             | Reference       |
-    +========+================+=====================+=================+
-    | TBD    | oblivious-keys | Oblivious HTTP keys | (This document) |
-    +--------+----------------+---------------------+-----------------+
+      +========+===================+====================+===========+
+      | Number | Name              | Meaning            | Reference |
+      +========+===================+====================+===========+
+      | TBD    | oblivious-configs | Oblivious HTTP key | (This     |
+      |        |                   | configurations     | document) |
+      +--------+-------------------+--------------------+-----------+
 
                                   Table 1
 
@@ -271,7 +273,11 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-
               binary-message-01>.
 
-   [DDR]      "*** BROKEN REFERENCE ***".
+   [DDR]      Pauly, T., Kinnear, E., Wood, C. A., McManus, P., and T.
+              Jensen, "Discovery of Designated Resolvers", Work in
+              Progress, Internet-Draft, draft-ietf-add-ddr-05, 31
+              January 2022, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-add-ddr-05>.
 
    [DNS-SVCB] Schwartz, B., "Service Binding Mapping for DNS Servers",
               Work in Progress, Internet-Draft, draft-ietf-add-svcb-dns-
