@@ -202,6 +202,6 @@ registry ({{SVCB}}).
 
 | Number  | Name           | Meaning                      | Reference       |
 | ------- | -------------- | ---------------------------- | --------------- |
-| TBD     | oblivious-configs | Oblivious HTTP keys          | (This document) |
+| TBD     | oblivious-configs | Oblivious HTTP key configurations         | (This document) |
 
 --- back
