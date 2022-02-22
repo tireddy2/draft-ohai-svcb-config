@@ -1327,28 +1327,13 @@ prevent unwanted linkability and tracking, clients using any key
 configuration discovery mechanism need to be concerned with attacks
 that target a specific user or population with a unique key configuration.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">There are several approaches clients can use to mitigate key targetting
-attacks. Clients <span class="bcp14">SHOULD</span> employ some technique to mitigate this attack.
-Possible mitigations include:<a href="#section-5-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-5-4.1">Validating that SVCB or HTTPS records including the "oblivious-configs"
+attacks. <span>[<a href="#CONSISTENCY" class="xref">CONSISTENCY</a>]</span> provides an analysis
+of the options for ensuring the key configurations are consistent between
+different clients.Clients <span class="bcp14">SHOULD</span> employ some technique to mitigate key
+targetting attack. One mitigation specific to this mechanism is validating
+that SVCB or HTTPS records including the "oblivious-configs"
 are protected by DNSSEC <span>[<a href="#DNSSEC" class="xref">DNSSEC</a>]</span>. This prevents attacks
-where a unique response is generated for each client of a resolver.<a href="#section-5-4.1" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-5-4.2">Coordination with the oblivious proxy to recognize anomalous key
-configurations. Trusted proxies can inspect the truncated key ID on
-oblivious requests to a target (and clients could choose to additionally
-share entire key configurations with proxies), allowing the proxy to
-reject requests if they detect that one user or a set of users is
-receiving a different key configuration than others.<a href="#section-5-4.2" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-5-4.3">Clients can retrieve the SVCB or HTTPS records through multiple resolvers,
-or in a way that doesn't reveal any client information, to make it difficult
-to target a user.<a href="#section-5-4.3" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-5-4.4">Clients can check keys with other clients or against public logs to
-validate that the keys they receive are not unique.<a href="#section-5-4.4" class="pilcrow">¶</a>
-</li>
-      </ul>
+where a unique response is generated for each client of a resolver.<a href="#section-5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana">
@@ -1431,6 +1416,10 @@ registry (<span>[<a href="#SVCB" class="xref">SVCB</a>]</span>).<a href="#sectio
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="CONSISTENCY">[CONSISTENCY]</dt>
+        <dd>
+<span class="refAuthor">Davidson, A.</span>, <span class="refAuthor">Finkel, M.</span>, <span class="refAuthor">Thomson, M.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Key Consistency and Discovery"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-wood-key-consistency-01</span>, <time datetime="2021-08-19" class="refDate">19 August 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-wood-key-consistency-01">https://datatracker.ietf.org/doc/html/draft-wood-key-consistency-01</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="DNSSEC">[DNSSEC]</dt>
         <dd>
 <span class="refAuthor">Arends, R.</span>, <span class="refAuthor">Austein, R.</span>, <span class="refAuthor">Larson, M.</span>, <span class="refAuthor">Massey, D.</span>, and <span class="refAuthor">S. Rose</span>, <span class="refTitle">"DNS Security Introduction and Requirements"</span>, <span class="seriesInfo">RFC 4033</span>, <span class="seriesInfo">DOI 10.17487/RFC4033</span>, <time datetime="2005-03" class="refDate">March 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4033">https://www.rfc-editor.org/rfc/rfc4033</a>&gt;</span>. </dd>

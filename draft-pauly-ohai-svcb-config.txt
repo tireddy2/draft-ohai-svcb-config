@@ -221,28 +221,13 @@ Table of Contents
    configuration.
 
    There are several approaches clients can use to mitigate key
-   targetting attacks.  Clients SHOULD employ some technique to mitigate
-   this attack.  Possible mitigations include:
-
-   *  Validating that SVCB or HTTPS records including the "oblivious-
-      configs" are protected by DNSSEC [DNSSEC].  This prevents attacks
-      where a unique response is generated for each client of a
-      resolver.
-
-   *  Coordination with the oblivious proxy to recognize anomalous key
-      configurations.  Trusted proxies can inspect the truncated key ID
-      on oblivious requests to a target (and clients could choose to
-      additionally share entire key configurations with proxies),
-      allowing the proxy to reject requests if they detect that one user
-      or a set of users is receiving a different key configuration than
-      others.
-
-   *  Clients can retrieve the SVCB or HTTPS records through multiple
-      resolvers, or in a way that doesn't reveal any client information,
-      to make it difficult to target a user.
-
-   *  Clients can check keys with other clients or against public logs
-      to validate that the keys they receive are not unique.
+   targetting attacks.  [CONSISTENCY] provides an analysis of the
+   options for ensuring the key configurations are consistent between
+   different clients.Clients SHOULD employ some technique to mitigate
+   key targetting attack.  One mitigation specific to this mechanism is
+   validating that SVCB or HTTPS records including the "oblivious-
+   configs" are protected by DNSSEC [DNSSEC].  This prevents attacks
+   where a unique response is generated for each client of a resolver.
 
 6.  IANA Considerations
 
@@ -311,6 +296,13 @@ Table of Contents
               svcb-https-08>.
 
 7.2.  Informative References
+
+   [CONSISTENCY]
+              Davidson, A., Finkel, M., Thomson, M., and C. A. Wood,
+              "Key Consistency and Discovery", Work in Progress,
+              Internet-Draft, draft-wood-key-consistency-01, 19 August
+              2021, <https://datatracker.ietf.org/doc/html/draft-wood-
+              key-consistency-01>.
 
    [DNSSEC]   Arends, R., Austein, R., Larson, M., Massey, D., and S.
               Rose, "DNS Security Introduction and Requirements",
