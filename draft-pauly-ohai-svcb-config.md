@@ -120,7 +120,7 @@ this service as a generic DoH service.
 Clients MUST validate that they can parse the value of "oblivious-keys"
 as a valid key configuration before attempting to use the service.
 
-## Interactions with DDR {#ddr}
+### Interactions with DDR {#ddr}
 
 Clients can discover an oblivious DNS server configuration using
 DDR, by either querying _dns.resolver.arpa to a locally configured
