@@ -173,27 +173,15 @@ prevent unwanted linkability and tracking, clients using any key
 configuration discovery mechanism need to be concerned with attacks
 that target a specific user or population with a unique key configuration.
 
-There are several approaches clients can use to mitigate key targetting
-attacks. Clients SHOULD employ some technique to mitigate this attack.
-Possible mitigations include:
 
-- Validating that SVCB or HTTPS records including the "oblivious-configs"
+There are several approaches clients can use to mitigate key targetting
+attacks. {{?CONSISTENCY=I-D.draft-wood-key-consistency}} provides an analysis
+of the options for ensuring the key configurations are consistent between
+different clients.Clients SHOULD employ some technique to mitigate key
+targetting attack. One mitigation specific to this mechanism is validating
+that SVCB or HTTPS records including the "oblivious-configs"
 are protected by DNSSEC {{?DNSSEC=RFC4033}}. This prevents attacks
 where a unique response is generated for each client of a resolver.
-
-- Coordination with the oblivious proxy to recognize anomalous key
-configurations. Trusted proxies can inspect the truncated key ID on
-oblivious requests to a target (and clients could choose to additionally
-share entire key configurations with proxies), allowing the proxy to
-reject requests if they detect that one user or a set of users is
-receiving a different key configuration than others.
-
-- Clients can retrieve the SVCB or HTTPS records through multiple resolvers,
-or in a way that doesn't reveal any client information, to make it difficult
-to target a user.
-
-- Clients can check keys with other clients or against public logs to
-validate that the keys they receive are not unique.
 
 # IANA Considerations {#iana}
 
