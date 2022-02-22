@@ -68,8 +68,8 @@ Table of Contents
    3.  The oblivious-keys SvcParamKey
      3.1.  Use in HTTPS service records
      3.2.  Use in DNS server SVCB records
-     3.3.  Interactions with DDR
-       3.3.1.  Handling Oblivious DoH Configurations
+       3.2.1.  Interactions with DDR
+       3.2.2.  Handling Oblivious DoH Configurations
    4.  Deployment Considerations
    5.  Security and Privacy Considerations
    6.  IANA Considerations
@@ -166,7 +166,7 @@ Table of Contents
    keys" as a valid key configuration before attempting to use the
    service.
 
-3.3.  Interactions with DDR
+3.2.1.  Interactions with DDR
 
    Clients can discover an oblivious DNS server configuration using DDR,
    by either querying _dns.resolver.arpa to a locally configured
@@ -184,7 +184,7 @@ Table of Contents
    of the target's TLS certificate or filter to only allow targets known
    and trusted by the proxy.
 
-3.3.1.  Handling Oblivious DoH Configurations
+3.2.2.  Handling Oblivious DoH Configurations
 
    Oblivious DoH was originally defined in [ODOH].  This version of
    Oblivious DoH uses a different key configuration format than generic
@@ -210,7 +210,7 @@ Table of Contents
    When discovering designated oblivious DNS servers using this
    mechanism, clients need to ensure that the designation is trusted in
    lieu of being able to directly check the contents of the target
-   server's TLS certificate.  See Section 3.3 for more discussion.
+   server's TLS certificate.  See Section 3.2.1 for more discussion.
 
    As discussed in [OHTTP], client requests using Oblivious HTTP can
    only be linked by recognizing the key configuration.  In order to
