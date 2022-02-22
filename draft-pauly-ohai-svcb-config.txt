@@ -173,17 +173,17 @@ Table of Contents
    by either querying _dns.resolver.arpa to a locally configured
    resolver or querying using the name of a resolver [DDR].
 
-   In the case of oblivious DNS servers, the client cannot direclty use
+   In the case of oblivious DNS servers, the client cannot directly use
    the verification mechanisms described in [DDR], which rely on
-   checking for known resovler IP addresses or hostnames in TLS
-   certificates, since clients do not directly perfom TLS with oblivious
-   targets.  Instead, a client MUST use some alternate mechanism to
-   verify that it should use an oblivious target.  For example, the
-   client could have a local policy of known oblivious target names that
-   it is allowed to use, or the client could coordinate with the
-   oblivious proxy either have the oblivious proxy check the properties
-   of the target's TLS certificate or filter to only allow targets known
-   and trusted by the proxy.
+   checking for known resolver IP addresses or hostnames in TLS
+   certificates, since clients do not directly perform TLS with
+   oblivious targets.  Instead, a client MUST use some alternate
+   mechanism to verify that it should use an oblivious target.  For
+   example, the client could have a local policy of known oblivious
+   target names that it is allowed to use, or the client could
+   coordinate with the oblivious proxy to either have the oblivious
+   proxy check the properties of the target's TLS certificate or filter
+   to only allow targets known and trusted by the proxy.
 
 3.2.2.  Handling Oblivious DoH Configurations
 
