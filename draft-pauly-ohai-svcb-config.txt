@@ -4,8 +4,8 @@
 
 Oblivious HTTP Application Intermediation                       T. Pauly
 Internet-Draft                                                Apple Inc.
-Intended status: Informational                          22 February 2022
-Expires: 26 August 2022
+Intended status: Informational                          28 February 2022
+Expires: 1 September 2022
 
 
   Distribution of Oblivious Configurations via Service Binding Records
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 August 2022.
+   This Internet-Draft will expire on 1 September 2022.
 
 Copyright Notice
 
@@ -65,7 +65,7 @@ Table of Contents
 
    1.  Introduction
    2.  Conventions and Definitions
-   3.  The oblivious-configs SvcParamKey
+   3.  The ohttp-configs and ohttp-path SvcParamKeys
      3.1.  Use in HTTPS service records
      3.2.  Use in DNS server SVCB records
        3.2.1.  Interactions with DDR
@@ -115,10 +115,10 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  The oblivious-configs SvcParamKey
+3.  The ohttp-configs and ohttp-path SvcParamKeys
 
-   The "oblivious-configs" SvcParamKey Section 6 is used to convey one
-   or more key configurations that can be used by clients to issue
+   The "ohttp-configs" SvcParamKey Section 6 is used to convey one or
+   more key configurations that can be used by clients to issue
    oblivious requests to a target server described by the SVCB record.
 
    In wire format, the value of the parameter is one or more KeyConfig
@@ -126,44 +126,51 @@ Table of Contents
    the value is the same concatenated KeyConfig structures encoded in
    Base64 [BASE64].
 
-   The meaning of the "oblivious-configs" parameter depends on the
-   scheme of the SVCB record.  This document defines the interpretation
-   for the "https" [SVCB] and "dns" [DNS-SVCB] schemes.  Other schemes
-   that want to use this parameter MUST define the interpretation and
-   meaning of the configuration.
+   The meaning of the "ohttp-configs" parameter depends on the scheme of
+   the SVCB record.  This document defines the interpretation for the
+   "https" [SVCB] and "dns" [DNS-SVCB] schemes.  Other schemes that want
+   to use this parameter MUST define the interpretation and meaning of
+   the configuration.
+
+   The "ohttp-path" SvcParamKey Section 6 is used to convey the URI path
+   of the oblivious target to which oblivious HTTP requests can sent.
+   In both wire format and presentation format, this is a UTF-8 encoded
+   string that contains the path segment of a URI.  If this path
+   parameter is not present, oblivious requests can be made to the root
+   "/" path.
 
 3.1.  Use in HTTPS service records
 
    For the "https" scheme, which uses the HTTPS RR type instead of SVCB,
-   the presence of the "oblivious-configs" parameter means that the
-   service being described is an Oblivious HTTP service that uses the
-   default "message/bhttp" media type [OHTTP] [BINARY-HTTP].
+   the presence of the "ohttp-configs" parameter means that the service
+   being described is an Oblivious HTTP service that uses the default
+   "message/bhttp" media type [OHTTP] [BINARY-HTTP].
 
-   When present in an HTTPS record, the "oblivious-configs" MUST be
-   included in the mandatory parameter list, to ensure that
-   implementations that do not understand the key do not interpret this
-   service as a generic HTTP service.
+   When present in an HTTPS record, the "ohttp-configs" MUST be included
+   in the mandatory parameter list, to ensure that implementations that
+   do not understand the key do not interpret this service as a generic
+   HTTP service.
 
-   Clients MUST validate that they can parse the value of "oblivious-
+   Clients MUST validate that they can parse the value of "ohttp-
    configs" as a valid key configuration before attempting to use the
    service.
 
 3.2.  Use in DNS server SVCB records
 
    For the "dns" scheme, as defined in [DNS-SVCB], the presence of the
-   "oblivious-configs" parameter means that the DNS server being
-   described is an Oblivious DNS over HTTP (DoH) service.  The default
-   media type expected for use in Oblivious HTTP to DNS resolvers is
-   "application/dns-message" [DOH].
+   "ohttp-configs" parameter means that the DNS server being described
+   is an Oblivious DNS over HTTP (DoH) service.  The default media type
+   expected for use in Oblivious HTTP to DNS resolvers is "application/
+   dns-message" [DOH].
 
-   The "oblivious-configs" parameter is only defined for use with DoH,
-   so the "alpn" SvcParamKey MUST indicate support for a version of HTTP
-   and the "dohpath" SvcParamKey MUST be present.  The "oblivious-
-   configs" MUST also be included in the mandatory parameter list, to
-   ensure that implementations that do not understand the key do not
-   interpret this service as a generic DoH service.
+   The "ohttp-configs" parameter is only defined for use with DoH, so
+   the "alpn" SvcParamKey MUST indicate support for a version of HTTP
+   and the "dohpath" SvcParamKey MUST be present.  The "ohttp-configs"
+   MUST also be included in the mandatory parameter list, to ensure that
+   implementations that do not understand the key do not interpret this
+   service as a generic DoH service.
 
-   Clients MUST validate that they can parse the value of "oblivious-
+   Clients MUST validate that they can parse the value of "ohttp-
    configs" as a valid key configuration before attempting to use the
    service.
 
@@ -193,22 +200,28 @@ Table of Contents
 
    Oblivious DoH was originally defined in [ODOH].  This version of
    Oblivious DoH uses a different key configuration format than generic
-   Oblivious HTTP.  SVCB records using the "dns" scheme MAY include an
+   Oblivious HTTP.  SVCB records using the "dns" scheme can include an
    ObliviousDoHConfigs structure (including the redundant length field)
-   in place of the concatenated KeyConfigs structure, since two
-   structures are mutually exclusive.
+   using the "odoh-configs" parameter.
+
+   In wire format, the value of the "odoh-configs" parameter is a
+   ObliviousDoHConfigs structure [ODOH].  In presentation format, the
+   value is the same structure encoded in Base64 [BASE64].
+
+   All other requirements for "ohttp-configs" in this document apply to
+   "odoh-configs".
 
 4.  Deployment Considerations
 
-   Deployments that add the "oblivious-configs" SvcParamKey need to be
+   Deployments that add the "ohttp-configs" SvcParamKey need to be
    careful to add this only to services meant to be accessed using
    Oblivious HTTP.  Information in a single SVCB record that contains
-   "oblivious-configs" only applies to the oblivious service, not other
-   HTTP services.
+   "ohttp-configs" only applies to the oblivious service, not other HTTP
+   services.
 
    If a service offers both traditional HTTP and oblivious HTTP, these
    can be represented by separate SVCB or HTTPS records, both with and
-   without the "oblivious-configs" SvcParamKey.
+   without the "ohttp-configs" SvcParamKey.
 
 5.  Security and Privacy Considerations
 
@@ -238,12 +251,18 @@ Table of Contents
    IANA is requested to add the following entry to the SVCB Service
    Parameters registry ([SVCB]).
 
-      +========+===================+====================+===========+
-      | Number | Name              | Meaning            | Reference |
-      +========+===================+====================+===========+
-      | TBD    | oblivious-configs | Oblivious HTTP key | (This     |
-      |        |                   | configurations     | document) |
-      +--------+-------------------+--------------------+-----------+
+        +========+===============+====================+===========+
+        | Number | Name          | Meaning            | Reference |
+        +========+===============+====================+===========+
+        | TBD    | ohttp-configs | Oblivious HTTP key | (This     |
+        |        |               | configurations     | document) |
+        +--------+---------------+--------------------+-----------+
+        | TBD    | ohttp-path    | Oblivious HTTP     | (This     |
+        |        |               | request path       | document) |
+        +--------+---------------+--------------------+-----------+
+        | TBD    | odoh-configs  | Oblivious DoH key  | (This     |
+        |        |               | configurations     | document) |
+        +--------+---------------+--------------------+-----------+
 
                                   Table 1
 
