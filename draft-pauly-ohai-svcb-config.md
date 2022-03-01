@@ -154,12 +154,13 @@ Oblivious DoH was originally defined in
 {{?ODOH=I-D.draft-pauly-dprive-oblivious-doh}}. This version of
 Oblivious DoH uses a different key configuration format than
 generic Oblivious HTTP. SVCB records using the "dns" scheme
-can include an ObliviousDoHConfigs structure (including the
-redundant length field) using the "odoh-configs" parameter.
+can include one or more `ObliviousDoHConfig` structures 
+using the "odoh-configs" parameter.
 
-In wire format, the value of the "odoh-configs" parameter is a
-ObliviousDoHConfigs structure {{ODOH}}. In presentation format,
-the value is the same structure encoded in Base64 {{!BASE64=RFC4648}}.
+In wire format, the value of the "odoh-configs" parameter is one
+or more `ObliviousDoHConfigs` structures {{ODOH}} concatenated
+together. In presentation format, the value is the same structures
+encoded in Base64 {{!BASE64=RFC4648}}.
 
 All other requirements for "ohttp-configs" in this document apply
 to "odoh-configs".
@@ -188,7 +189,6 @@ can only be linked by recognizing the key configuration. In order to
 prevent unwanted linkability and tracking, clients using any key
 configuration discovery mechanism need to be concerned with attacks
 that target a specific user or population with a unique key configuration.
-
 
 There are several approaches clients can use to mitigate key targetting
 attacks. {{?CONSISTENCY=I-D.draft-wood-key-consistency}} provides an analysis
