@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-02-24T00:06:45.076566+00:00",
+  "timestamp": "2022-03-01T00:07:49.293434+00:00",
   "repo": "tfpauly/draft-ohai-svcb-config",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDOG3oZ-85EYSFG",
       "title": "OHTTP targets need a path",
       "url": "https://github.com/tfpauly/draft-ohai-svcb-config/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I may have missed it, but the current draft doesn't seem to provide a way for clients to discover the full oblivious target resource from a HTTPS record with the \"oblivious-configs\" parameter -- it only gives them the configuration structure. Similar to the DNS case, OHTTP targets are defined by their path, so I think it might make sense to mint a new parameter for the path, maybe \"oblivious-path\"? ",
       "createdAt": "2022-02-22T18:04:11Z",
-      "updatedAt": "2022-02-23T00:55:34Z",
-      "closedAt": null,
+      "updatedAt": "2022-02-28T22:00:48Z",
+      "closedAt": "2022-02-28T22:00:48Z",
       "comments": [
         {
           "author": "tfpauly",
@@ -93,15 +93,15 @@
       "id": "I_kwDOG3oZ-85EYTef",
       "title": "Mixed configuration structures for DNS",
       "url": "https://github.com/tfpauly/draft-ohai-svcb-config/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "chris-wood",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The draft currently allows for the \"configs\" parameter to carry an `ObliviousDoHConfigs` structure instead of a `KeyConfig`. `ObliviousDoHConfigs` looks like so:\r\n\r\n~~~\r\nstruct {\r\n   uint16 kem_id;\r\n   uint16 kdf_id;\r\n   uint16 aead_id;\r\n   opaque public_key<1..2^16-1>;\r\n} ObliviousDoHConfigContents;\r\n\r\nstruct {\r\n   uint16 version;\r\n   uint16 length;\r\n   select (ObliviousDoHConfig.version) {\r\n      case 0x0001: ObliviousDoHConfigContents contents;\r\n   }\r\n} ObliviousDoHConfig;\r\n\r\nObliviousDoHConfig ObliviousDoHConfigs<1..2^16-1>;\r\n~~~\r\n\r\nAnd `KeyConfig`:\r\n\r\n~~~\r\nstruct {\r\n  uint8 key_id;\r\n  HpkeKemId kem_id;\r\n  HpkePublicKey public_key;\r\n  HpkeSymmetricAlgorithms cipher_suites<4..2^16-4>;\r\n} KeyConfig;\r\n~~~\r\n\r\nI've not actually worked it out, but I wonder if these structures are defined such that clients can always distinguish between the two. If clients get confused, they might try to engage the OHTTP encapsulation logic instead of ODoH logic (or vice versa), and I don't think we have a good understanding of what can happen as a result.\r\n\r\nAbsent this analysis, I would drop the ability for configs to carry either one of these structures, and unify around `KeyConfig`. ",
       "createdAt": "2022-02-22T18:10:36Z",
-      "updatedAt": "2022-02-23T00:57:50Z",
-      "closedAt": null,
+      "updatedAt": "2022-02-28T22:00:48Z",
+      "closedAt": "2022-02-28T22:00:48Z",
       "comments": [
         {
           "author": "tfpauly",
@@ -375,6 +375,48 @@
           "body": "",
           "createdAt": "2022-02-22T21:06:28Z",
           "updatedAt": "2022-02-22T21:06:28Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOG3oZ-84zsJJx",
+      "title": "Add explicit keys for OHTTP-Path and ODoH-Configs",
+      "url": "https://github.com/tfpauly/draft-ohai-svcb-config/pull/9",
+      "state": "MERGED",
+      "author": "tfpauly",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #2 \r\nCloses #3 ",
+      "createdAt": "2022-02-28T21:36:32Z",
+      "updatedAt": "2022-02-28T22:00:48Z",
+      "baseRepository": "tfpauly/draft-ohai-svcb-config",
+      "baseRefName": "main",
+      "baseRefOid": "96282c4027d06af7ec27e1db1033eec512ad28b2",
+      "headRepository": "tfpauly/draft-ohai-svcb-config",
+      "headRefName": "tfpauly-patch-3",
+      "headRefOid": "1f24def588254ccd4daf46afd66a8b87f536c412",
+      "closedAt": "2022-02-28T22:00:48Z",
+      "mergedAt": "2022-02-28T22:00:48Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "34a491133562f358093f5355ecf575b2f389a7a4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG3oZ-841YhT6",
+          "commit": {
+            "abbreviatedOid": "1f24def"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-02-28T21:37:57Z",
+          "updatedAt": "2022-02-28T21:37:57Z",
           "comments": []
         }
       ]
