@@ -4,8 +4,8 @@
 
 Oblivious HTTP Application Intermediation                       T. Pauly
 Internet-Draft                                                Apple Inc.
-Intended status: Informational                          28 February 2022
-Expires: 1 September 2022
+Intended status: Informational                              1 March 2022
+Expires: 2 September 2022
 
 
   Distribution of Oblivious Configurations via Service Binding Records
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 September 2022.
+   This Internet-Draft will expire on 2 September 2022.
 
 Copyright Notice
 
@@ -200,13 +200,14 @@ Table of Contents
 
    Oblivious DoH was originally defined in [ODOH].  This version of
    Oblivious DoH uses a different key configuration format than generic
-   Oblivious HTTP.  SVCB records using the "dns" scheme can include an
-   ObliviousDoHConfigs structure (including the redundant length field)
-   using the "odoh-configs" parameter.
+   Oblivious HTTP.  SVCB records using the "dns" scheme can include one
+   or more ObliviousDoHConfig structures using the "odoh-configs"
+   parameter.
 
-   In wire format, the value of the "odoh-configs" parameter is a
-   ObliviousDoHConfigs structure [ODOH].  In presentation format, the
-   value is the same structure encoded in Base64 [BASE64].
+   In wire format, the value of the "odoh-configs" parameter is one or
+   more ObliviousDoHConfigs structures [ODOH] concatenated together.  In
+   presentation format, the value is the same structures encoded in
+   Base64 [BASE64].
 
    All other requirements for "ohttp-configs" in this document apply to
    "odoh-configs".
