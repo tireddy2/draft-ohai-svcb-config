@@ -209,7 +209,7 @@ that target a specific user or population with a unique key configuration.
 There are several approaches clients can use to mitigate key targetting
 attacks. {{?CONSISTENCY=I-D.draft-wood-key-consistency}} provides an analysis
 of the options for ensuring the key configurations are consistent between
-different clients.Clients SHOULD employ some technique to mitigate key
+different clients. Clients SHOULD employ some technique to mitigate key
 targetting attack. One mitigation specific to this mechanism is validating
 that SVCB or HTTPS records including the "oblivious-configs"
 are protected by DNSSEC {{?DNSSEC=RFC4033}}. This prevents attacks
