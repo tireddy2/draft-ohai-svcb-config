@@ -4,8 +4,8 @@
 
 Oblivious HTTP Application Intermediation                       T. Pauly
 Internet-Draft                                                Apple Inc.
-Intended status: Informational                              1 March 2022
-Expires: 2 September 2022
+Intended status: Informational                              4 March 2022
+Expires: 5 September 2022
 
 
   Distribution of Oblivious Configurations via Service Binding Records
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2022.
+   This Internet-Draft will expire on 5 September 2022.
 
 Copyright Notice
 
@@ -68,8 +68,9 @@ Table of Contents
    3.  The ohttp-configs and ohttp-path SvcParamKeys
      3.1.  Use in HTTPS service records
      3.2.  Use in DNS server SVCB records
-       3.2.1.  Interactions with DDR
-       3.2.2.  Handling Oblivious DoH Configurations
+       3.2.1.  Use with DDR
+       3.2.2.  Use with DNR
+       3.2.3.  Handling Oblivious DoH Configurations
    4.  Deployment Considerations
    5.  Security and Privacy Considerations
    6.  IANA Considerations
@@ -174,7 +175,7 @@ Table of Contents
    configs" as a valid key configuration before attempting to use the
    service.
 
-3.2.1.  Interactions with DDR
+3.2.1.  Use with DDR
 
    Clients can discover an oblivious DNS server configuration using DDR,
    by either querying _dns.resolver.arpa to a locally configured
@@ -196,7 +197,23 @@ Table of Contents
    proxy check the properties of the target's TLS certificate or filter
    to only allow targets known and trusted by the proxy.
 
-3.2.2.  Handling Oblivious DoH Configurations
+   Clients also need to ensure that they are not being targeted with
+   unique key configurations that would reveal their identity.  See
+   Section 5 for more discussion.
+
+3.2.2.  Use with DNR
+
+   The SvcParamKeys defined in this document also can be used with
+   Discovery of Network-designated Resolvers (DNR) [DNR].  In this case,
+   the oblivious configuration and path parameters can be included in
+   DHCP and Router Advertisement messages.
+
+   While DNR does not require the same kind of verification as DDR,
+   clients still need to ensure that they are not being targeted with
+   unique key configurations that would reveal their identity.  See
+   Section 5 for more discussion.
+
+3.2.3.  Handling Oblivious DoH Configurations
 
    Oblivious DoH was originally defined in [ODOH].  This version of
    Oblivious DoH uses a different key configuration format than generic
@@ -287,6 +304,13 @@ Table of Contents
               Progress, Internet-Draft, draft-ietf-add-ddr-05, 31
               January 2022, <https://datatracker.ietf.org/doc/html/
               draft-ietf-add-ddr-05>.
+
+   [DNR]      Boucadair, M., Reddy, T., Wing, D., Cook, N., and T.
+              Jensen, "DHCP and Router Advertisement Options for the
+              Discovery of Network-designated Resolvers (DNR)", Work in
+              Progress, Internet-Draft, draft-ietf-add-dnr-05, 13
+              December 2021, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-add-dnr-05>.
 
    [DNS-SVCB] Schwartz, B., "Service Binding Mapping for DNS Servers",
               Work in Progress, Internet-Draft, draft-ietf-add-svcb-dns-
