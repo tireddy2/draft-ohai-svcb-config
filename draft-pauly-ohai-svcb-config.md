@@ -126,7 +126,7 @@ this service as a generic DoH service.
 Clients MUST validate that they can parse the value of "ohttp-configs"
 as a valid key configuration before attempting to use the service.
 
-### Interactions with DDR {#ddr}
+### Use with DDR {#ddr}
 
 Clients can discover an oblivious DNS server configuration using
 DDR, by either querying _dns.resolver.arpa to a locally configured
@@ -147,6 +147,22 @@ use, or the client could coordinate with the oblivious proxy to either
 have the oblivious proxy check the properties of the target's TLS
 certificate or filter to only allow targets known and trusted by the
 proxy.
+
+Clients also need to ensure that they are not being targeted with unique
+key configurations that would reveal their identity. See {{security}} for
+more discussion.
+
+### Use with DNR {#dnr}
+
+The SvcParamKeys defined in this document also can be used with Discovery
+of Network-designated Resolvers (DNR) {{!DNR=draft-ietf-add-dnr}}. In this
+case, the oblivious configuration and path parameters can be included
+in DHCP and Router Advertisement messages.
+
+While DNR does not require the same kind of verification as DDR, clients
+still need to ensure that they are not being targeted with unique
+key configurations that would reveal their identity. See {{security}} for
+more discussion.
 
 ### Handling Oblivious DoH Configurations
 
@@ -177,7 +193,7 @@ If a service offers both traditional HTTP and oblivious HTTP, these can
 be represented by separate SVCB or HTTPS records, both with and
 without the "ohttp-configs" SvcParamKey.
 
-# Security and Privacy Considerations
+# Security and Privacy Considerations {#security}
 
 When discovering designated oblivious DNS servers using this mechanism,
 clients need to ensure that the designation is trusted in lieu of
@@ -209,6 +225,5 @@ registry ({{SVCB}}).
 | TBD     | ohttp-configs  | Oblivious HTTP key configurations  | (This document) |
 | TBD     | ohttp-path     | Oblivious HTTP request path        | (This document) |
 | TBD     | odoh-configs   | Oblivious DoH key configurations   | (This document) |
-
 
 --- back
