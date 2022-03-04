@@ -155,7 +155,7 @@ more discussion.
 ### Use with DNR {#dnr}
 
 The SvcParamKeys defined in this document also can be used with Discovery
-of Network-designated Resolvers (DNR) {{!DNR=draft-ietf-add-dnr}}. In this
+of Network-designated Resolvers (DNR) {{!DNR=I-D.draft-ietf-add-dnr}}. In this
 case, the oblivious configuration and path parameters can be included
 in DHCP and Router Advertisement messages.
 
